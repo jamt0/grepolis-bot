@@ -1,5 +1,7 @@
 # Bot de recolección de recursos Grepolis
 
+Es necesario tener node y npm instalados
+
 ## Instalar dependencias
 
 ### `npm install`
