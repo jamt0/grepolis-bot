@@ -38,7 +38,7 @@ Cypress.Commands.add("entrarALaVistaPorIslas", () => {
 
 Cypress.Commands.add("entrarALaAldea", (aldeaData: Cypress.TAldeaData) => {
   cy.wait(2000);
-  cy.get(`farm_town_${aldeaData.numeroAldea}`).click({ force: true });
+  cy.get(`#farm_town_${aldeaData.numeroAldea}`).click({ force: true });
 });
 
 Cypress.Commands.add("pedirRecursosALaAldea", () => {
