@@ -6,7 +6,7 @@
 
 ## Configurar bot
 
-Cambiar los siguientes parametros
+Cambiar los siguientes parametros en 'cypress/support/config.ts'
 
 - USER: Nombre usuario o correo electronico.
 - PASSWORD: Contraseña usuario;
