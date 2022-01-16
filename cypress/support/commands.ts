@@ -1,10 +1,15 @@
 declare global {
   namespace Cypress {
+
+    type TUserData = {user: string, password: string};
+    type TWorldData = {world: string};
+    type TAldeaData = {numeroAldea: number};
+    
     interface Chainable {
-      entrarALaAldea(): void;
+      entrarALaAldea(aldeaData: TAldeaData): void;
       entrarALaVistaPorIslas(): void;
-      iniciarSesion(): void;
-      entrarAlMundo(): void;
+      iniciarSesion(userData: TUserData): void;
+      entrarAlMundo(worldData: TWorldData): void;
       pedirRecursosALaAldea(): void;
       irAnteriorAldea(): void;
       cerrarVentanaDeLaAldea(): void;
@@ -12,18 +17,18 @@ declare global {
   }
 }
 
-Cypress.Commands.add("iniciarSesion", () => {
+Cypress.Commands.add("iniciarSesion", (userData: Cypress.TUserData) => {
   cy.intercept("POST", "/glps/login_check").as("login_check");
-  cy.get("#login_userid").type("jam0");
-  cy.get("#login_password").type("buxi022899");
+  cy.get("#login_userid").type(userData.user);
+  cy.get("#login_password").type(userData.password);
   cy.get("#login_Login").click();
   cy.wait("@login_check");
 });
 
-Cypress.Commands.add("entrarAlMundo", () => {
+Cypress.Commands.add("entrarAlMundo", (worldData: Cypress.TWorldData) => {
   cy.intercept("POST", "/start/index?action=fetch_news").as("fetch_news");
   cy.wait("@fetch_news");
-  cy.contains("DÍON").click();
+  cy.contains(worldData.world).click();
 });
 
 Cypress.Commands.add("entrarALaVistaPorIslas", () => {
@@ -31,9 +36,9 @@ Cypress.Commands.add("entrarALaVistaPorIslas", () => {
   cy.get('div[name="island_view"]').click();
 });
 
-Cypress.Commands.add("entrarALaAldea", () => {
+Cypress.Commands.add("entrarALaAldea", (aldeaData: Cypress.TAldeaData) => {
   cy.wait(2000);
-  cy.get("#farm_town_216").click({ force: true });
+  cy.get(`farm_town_${aldeaData.numeroAldea}`).click({ force: true });
 });
 
 Cypress.Commands.add("pedirRecursosALaAldea", () => {

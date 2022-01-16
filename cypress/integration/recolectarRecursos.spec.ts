@@ -1,34 +1,35 @@
-describe("Recolectar cada 5 minutos.", () => {
+import config from '../support/config';
+
+describe("Recolectar Recursos", () => {
   beforeEach(() => {
-    cy.visit("https://es102.grepolis.com/");
+    cy.visit("https://es102.grepolis.com/"); // Deberia funcionar cualquier subdominio
   });
 
-  it("Recolectar Recursos cada 10 minutos", function () {
-    cy.iniciarSesion();
+  it(`Recolectar Recursos cada ${config.TIEMPO_RECOLECCION / 60 / 1000} minutos`, function () {
+    
+    let numeroRecolecciones = 100;
+    
+    cy.iniciarSesion({user: config.USER, password: config.PASSWORD});
 
-    cy.entrarAlMundo();
+    cy.entrarAlMundo({world: config.WORLD});
 
     cy.entrarALaVistaPorIslas();
 
-    let contador = 100;
-
-    while (contador !== 0) {
-      cy.entrarALaAldea();
+    while (numeroRecolecciones !== 0) {
+      cy.entrarALaAldea({numeroAldea: config.NUMERO_ALDEA_INICIAL});
 
       cy.pedirRecursosALaAldea();
 
-      //Pedir recursos para 5 aldeas
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < config.NUMERO_ALDEAS; i++) {
         cy.irAnteriorAldea();
         cy.pedirRecursosALaAldea();
       }
 
       cy.cerrarVentanaDeLaAldea();
 
-      //esperar 10 minutos
-      cy.wait(600000);
+      cy.wait(config.TIEMPO_RECOLECCION);
 
-      contador--;
+      numeroRecolecciones--;
     }
   });
 });
