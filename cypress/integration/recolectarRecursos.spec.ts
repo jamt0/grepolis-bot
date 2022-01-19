@@ -1,33 +1,36 @@
-import config from '../support/config';
 
 describe("Recolectar Recursos", () => {
-  beforeEach(() => {
-    cy.visit("https://es102.grepolis.com/"); // Deberia funcionar cualquier subdominio
-  });
-
-  it(`Recolectar Recursos cada ${config.TIEMPO_RECOLECCION / 60 / 1000} minutos`, function () {
+  
+  it(`Recolectar Recursos cada ${Cypress.env('TIEMPO_RECOLECCION') / 60 / 1000} minutos`, function () {
+    cy.visit({url:"/", timeout: 30000}); // Deberia funcionar cualquier subdominio
     
-    let numeroRecolecciones = 100;
+    let numeroRecolecciones = 100000;
     
-    cy.iniciarSesion({user: config.USER, password: config.PASSWORD});
+    cy.iniciarSesion({user: Cypress.env('USER'), password: Cypress.env('PASSWORD')});
 
-    cy.entrarAlMundo({world: config.WORLD});
+    cy.entrarAlMundo({world: Cypress.env('WORLD')});
 
     cy.entrarALaVistaPorIslas();
 
     while (numeroRecolecciones !== 0) {
-      cy.entrarALaAldea({numeroAldea: config.NUMERO_ALDEA_INICIAL});
+      cy.entrarALaAldea({numeroAldea: Cypress.env('NUMERO_ALDEA_INICIAL')});
 
       cy.pedirRecursosALaAldea();
 
-      for (let i = 0; i < config.NUMERO_ALDEAS; i++) {
+      for (let i = 0; i < Cypress.env('NUMERO_ALDEAS'); i++) {
         cy.irAnteriorAldea();
         cy.pedirRecursosALaAldea();
+
+        cy.get("body").then($body => {
+          if ($body.find('.btn_confirm').length > 0) {   
+            cy.get('.btn_confirm').click({ force: true });
+          }
+      });
       }
 
       cy.cerrarVentanaDeLaAldea();
 
-      cy.wait(config.TIEMPO_RECOLECCION);
+      cy.wait( Cypress.env('TIEMPO_RECOLECCION'));
 
       numeroRecolecciones--;
     }
