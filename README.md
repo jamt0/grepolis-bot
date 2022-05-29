@@ -8,14 +8,17 @@ Es necesario tener node y npm instalados
 
 ## Configurar bot
 
-Cambiar los siguientes parametros en 'cypress/support/config.ts'
+Cambiar los siguientes parametros en 'cypress/fixture/datos.json'
 
-- USER: Nombre usuario o correo electronico.
-- PASSWORD: Contraseña usuario;
-- WORLD: Nombre en mayusculas del mundo.
-- NUMERO_ALDEAS: Numero aldeas activas en la isla.
-- TIEMPO_RECOLECCION: Tiempo de recoleccion en milisegundos.
-- NUMERO_ALDEA_INICIAL: Numero de la clase css en el html (Inspeccionar aldea).
+- usuario: Nombre usuario o correo electronico.
+- contrasena: Contraseña del usuario;
+- mundo: Nombre en mayusculas del mundo.
+- numeroAldeas: Numero aldeas activas en la isla. (Se toma para todas las ciudades, el cero cuenta)
+- tiempoRecoleccion: Tiempo de recoleccion en milisegundos. (Se toma para todas las ciudades)
+- ciudadesConAldeas: Es una lista de las ciudades con aldeas
+    -  nombreCiudad: Es opcional, para entendimiento propio
+    - aldeaInicial: codigo de cualquier aldea (Inspeccionar elementos).
+    - codigoCiudad:  codigo de la ciudad (Inspeccionar elementos).
 
 ## Iniciar bot
 

@@ -1,13 +1,7 @@
 {
   "viewportWidth": 1500,
   "viewportHeight": 780,
-  "baseUrl": "https://ar.grepolis.com/",
+  "baseUrl": "https://es.grepolis.com/",
   "env": {
-    "USER": "jamt0",
-    "PASSWORD":"buxi022899",
-    "WORLD": "OROPOS",
-    "NUMERO_ALDEAS": 6,
-    "TIEMPO_RECOLECCION": 600000,
-    "NUMERO_ALDEA_INICIAL": 100
   }
 }

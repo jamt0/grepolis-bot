@@ -4,6 +4,7 @@ declare global {
     type TUserData = {user: string, password: string};
     type TWorldData = {world: string};
     type TAldeaData = {numeroAldea: number};
+    type TCiudadData = {codigoCiudad: number};
     
     interface Chainable {
       entrarALaAldea(aldeaData: TAldeaData): void;
@@ -13,6 +14,7 @@ declare global {
       pedirRecursosALaAldea(): void;
       irAnteriorAldea(): void;
       cerrarVentanaDeLaAldea(): void;
+      cambiarCiudad(worldData: TCiudadData): void;
     }
   }
 }
@@ -56,6 +58,13 @@ Cypress.Commands.add("irAnteriorAldea", () => {
 Cypress.Commands.add("cerrarVentanaDeLaAldea", () => {
   cy.wait(1000);
   cy.get(".buttons_container > .close").click({ multiple: true, force: true });
+});
+
+Cypress.Commands.add("cambiarCiudad", (ciudadData: Cypress.TCiudadData) => {
+  cy.wait(1000);
+  cy.get('.town_groups_dropdown > .button').click();
+  cy.get(`[name="${ciudadData.codigoCiudad}"] > .town_name`).click();
+  cy.get('.btn_jump_to_town > .icon').click();
 });
 
 export {};

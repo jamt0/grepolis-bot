@@ -1,0 +1,15 @@
+{
+
+    "usuario": "jam0",
+    "contrasena":"buxi022899",
+    "mundo": "LENTINI",
+    "numeroAldeas": 5,
+    "tiempoRecoleccion": 600000,
+    "ciudadesConAldeas": [
+        {"nombreCiudad": "Jam", "aldeaInicial": 1320, "codigoCiudad": 4306},
+        {"nombreCiudad": "Jam1", "aldeaInicial": 1175, "codigoCiudad": 5269},
+        {"nombreCiudad": "Jam2", "aldeaInicial": 990, "codigoCiudad": 4086},
+        {"nombreCiudad": "Jam4", "aldeaInicial": 804, "codigoCiudad": 2724}
+    ]
+}
+  

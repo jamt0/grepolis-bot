@@ -1,38 +1,54 @@
-
 describe("Recolectar Recursos", () => {
-  
-  it(`Recolectar Recursos cada ${Cypress.env('TIEMPO_RECOLECCION') / 60 / 1000} minutos`, function () {
-    cy.visit({url:"/", timeout: 30000}); // Deberia funcionar cualquier subdominio
-    
-    let numeroRecolecciones = 100000;
-    
-    cy.iniciarSesion({user: Cypress.env('USER'), password: Cypress.env('PASSWORD')});
+  before(function () {
+    cy.fixture("datos").then(function (datos) {
+      this.datos = datos;
+    });
+  });
 
-    cy.entrarAlMundo({world: Cypress.env('WORLD')});
+  it("Recolectar Recursos", function () {
+    cy.visit({ url: "/", timeout: 30000 });
+
+    let numeroRecolecciones = 1000;
+
+    let contadorCiudades = 0;
+
+    cy.iniciarSesion({
+      user: this.datos.usuario,
+      password: this.datos.contrasena,
+    });
+
+    cy.entrarAlMundo({ world: this.datos.mundo });
 
     cy.entrarALaVistaPorIslas();
 
+    const listaCiudades = this.datos.ciudadesConAldeas;
+
     while (numeroRecolecciones !== 0) {
-      cy.entrarALaAldea({numeroAldea: Cypress.env('NUMERO_ALDEA_INICIAL')});
+      while (contadorCiudades !== listaCiudades.length) {
+        cy.cambiarCiudad({
+          codigoCiudad: listaCiudades[contadorCiudades].codigoCiudad,
+        });
 
-      cy.pedirRecursosALaAldea();
+        cy.entrarALaAldea({
+          numeroAldea: listaCiudades[contadorCiudades].aldeaInicial,
+        });
 
-      for (let i = 0; i < Cypress.env('NUMERO_ALDEAS'); i++) {
-        cy.irAnteriorAldea();
         cy.pedirRecursosALaAldea();
 
-        cy.get("body").then($body => {
-          if ($body.find('.btn_confirm').length > 0) {   
-            cy.get('.btn_confirm').click({ force: true });
-          }
-      });
+        for (let i = 0; i < this.datos.numeroAldeas; i++) {
+          cy.irAnteriorAldea();
+          cy.pedirRecursosALaAldea();
+        }
+
+        cy.cerrarVentanaDeLaAldea();
+
+        contadorCiudades++;
       }
 
-      cy.cerrarVentanaDeLaAldea();
-
-      cy.wait( Cypress.env('TIEMPO_RECOLECCION'));
+      cy.wait(this.datos.tiempoRecoleccion);
 
       numeroRecolecciones--;
+      contadorCiudades = 0;
     }
   });
 });
