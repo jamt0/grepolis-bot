@@ -1,5 +1,7 @@
 # Bot de recolección de recursos Grepolis
 
+Bot de recoleccion grepolis creado con cypress, en fase de desarrollo, pero funcional
+
 Es necesario tener node y npm instalados
 
 ## Instalar dependencias
