@@ -2,6 +2,9 @@
   "viewportWidth": 1500,
   "viewportHeight": 780,
   "baseUrl": "https://es.grepolis.com/",
+  "numTestsKeptInMemory": 0,
+  "video": false,
+  "defaultCommandTimeout": 10000,
   "env": {
   }
 }
